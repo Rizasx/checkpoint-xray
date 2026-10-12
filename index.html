@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#1a2227">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="Airport baggage X-ray checkpoint game.">
@@ -316,6 +316,9 @@ body{padding-top:max(8px,env(safe-area-inset-top));padding-left:max(16px,env(saf
 
 /* v18 no pull-to-refresh / bounce in the installed app */
 html,body{overscroll-behavior:none;overscroll-behavior-y:none}
+
+/* v20 no pinch / double-tap zoom */
+html,body{touch-action:pan-x pan-y}
 </style>
 </head>
 <body>
@@ -3032,6 +3035,9 @@ ids.forEach(id=>{
   }).observe(e,{childList:true,characterData:true,subtree:true});
 });
 })();
+// v20: block pinch / double-tap zoom gestures
+['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
 requestAnimationFrame(frame);
 })();
 </script>
